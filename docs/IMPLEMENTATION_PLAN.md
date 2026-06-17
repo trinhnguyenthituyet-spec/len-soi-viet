@@ -171,11 +171,12 @@
 - *(phát hiện + sửa 1 bug thật qua Playwright: `e.currentTarget.reset()` gọi sau `await` trong form upload — React đã null hóa synthetic event sau async, gây throw bị catch nhầm thành "Không thể kết nối tới server" dù import đã thành công. Sửa bằng cách lưu tham chiếu form trước khi `await`. Verify lại: tổng dòng, thành công, sợi/shop mới, bảng lỗi, lịch sử, bảng giá, needs-attention — đều đúng; đã xóa data test khỏi DB)*
 
 #### CRUD Pattern
-- [ ] Danh sách mẫu `/admin/patterns`
-- [ ] Form tạo/sửa mẫu — rich text editor cho description
-- [ ] Quản lý Steps — drag-drop reorder (hoặc đơn giản hơn: up/down buttons)
-- [ ] Upload nhiều ảnh cho gallery + step images
-- [ ] Link mẫu → sợi phù hợp (multi-select)
+- [x] Danh sách mẫu `/admin/patterns` — table với search
+- [x] Form tạo/sửa mẫu — *đổi quyết định: textarea thường thay vì rich text editor (đã hỏi và chốt với founder để không thêm dependency mới, đồng bộ với YarnForm)*
+- [x] Quản lý Steps — dùng phương án đơn giản hơn theo gợi ý của plan: up/down buttons (không drag-drop, tránh thêm dependency)
+- [x] Upload nhiều ảnh cho gallery + step images (tái dùng `lib/upload-image.ts`; gallery hỗ trợ giữ/bỏ ảnh cũ + thêm ảnh mới, mỗi step có 1 ảnh riêng)
+- [x] Link mẫu → sợi phù hợp (multi-select dùng `<select multiple>`, không cần thư viện riêng)
+- *(verify bằng Playwright: tạo mẫu kèm 2 bước, đổi thứ tự bước (up button), hiển thị đúng trên trang công khai kèm sợi phù hợp — đều pass. Trong lúc debug có hiện tượng tưởng là bug (trang không chuyển sau khi lưu) nhưng hóa ra do test script tự dùng tên mẫu trùng lặp giữa các lần chạy, kích hoạt đúng validation "trùng slug" — không phải lỗi thật; đã xóa data test khỏi DB)*
 
 #### Admin Dashboard
 - [ ] Trang `/admin` — số liệu: tổng sợi, mẫu, lượt xem hôm nay

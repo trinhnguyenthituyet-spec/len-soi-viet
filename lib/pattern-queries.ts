@@ -108,6 +108,16 @@ export async function getPatternBySlug(slug: string) {
 
 export type PatternDetail = NonNullable<Awaited<ReturnType<typeof getPatternBySlug>>>;
 
+export async function getPatternById(id: string) {
+  return prisma.pattern.findFirst({
+    where: { id, deletedAt: null },
+    include: {
+      steps: { orderBy: { order: "asc" } },
+      suitableYarns: { select: { id: true, nameVi: true } },
+    },
+  });
+}
+
 export async function getSimilarPatterns(pattern: PatternDetail, limit = 4) {
   return prisma.pattern.findMany({
     where: {
