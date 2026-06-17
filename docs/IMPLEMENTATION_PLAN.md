@@ -95,30 +95,31 @@
 ### 1.4 Module C — Thư viện mẫu
 
 #### Trang danh mục mẫu (`/patterns`)
-- [ ] Tạo `app/patterns/page.tsx` — server component
-- [ ] Tạo `components/pattern/PatternCard.tsx` — card với thumbnail, difficulty badge
-- [ ] Tạo `components/pattern/PatternGrid.tsx`
-- [ ] Filter: craft_type (đan/móc), difficulty, category, yarn_weight
-- [ ] Tag filter: tags phổ biến dạng chip/pill
-- [ ] Search theo tên mẫu
+- [x] Tạo `app/patterns/page.tsx` — server component (cùng `lib/pattern-queries.ts` + `app/api/patterns/route.ts`, kiến trúc giống Module A)
+- [x] Tạo `components/pattern/PatternCard.tsx` — card với thumbnail, difficulty badge
+- [x] Tạo `components/pattern/PatternGrid.tsx`
+- [x] Filter: craft_type (đan/móc), difficulty, category, yarn_weight (`PatternFilterSidebar.tsx`)
+- [x] Tag filter: tags phổ biến dạng chip/pill
+- [x] Search theo tên mẫu (dùng lại `components/SearchBar.tsx`)
 
 #### Trang chi tiết mẫu (`/patterns/[slug]`)
-- [ ] Tạo `app/patterns/[slug]/page.tsx` — SSG
-- [ ] Tạo `components/pattern/PatternGallery.tsx` — lightbox ảnh
-- [ ] Tạo `components/pattern/PatternInfo.tsx` — overview (độ khó, thời gian, kích cỡ)
-- [ ] Tạo `components/pattern/StepList.tsx` — accordion danh sách các bước
-- [ ] Tạo `components/pattern/StepItem.tsx` — ảnh + nội dung + tip từng bước
-- [ ] Nút "Lưu mẫu" — toggle save/unsave, lưu vào localStorage
-- [ ] Section "Sợi phù hợp" với giá inline
-- [ ] Section "Mẫu tương tự"
-- [ ] SEO metadata
+- [x] Tạo `app/patterns/[slug]/page.tsx` — SSG (`generateStaticParams` + ISR 1h, giống `/yarn/[slug]`)
+- [x] Tạo `components/pattern/PatternGallery.tsx` — lightbox ảnh (click mở overlay, prev/next, đóng bằng click ra ngoài/nút X)
+- [x] Tạo `components/pattern/PatternInfo.tsx` — overview (độ khó, thời gian, kích cỡ, gauge, kim/móc, lượng sợi)
+- [x] Tạo `components/pattern/StepList.tsx` — accordion danh sách các bước (mặc định mở bước 1)
+- [x] Tạo `components/pattern/StepItem.tsx` — ảnh + nội dung + tip từng bước
+- [x] Nút "Lưu mẫu" — toggle save/unsave, lưu vào localStorage (`SaveButton.tsx` + `lib/use-saved-patterns.ts`)
+- [x] Section "Sợi phù hợp" với giá inline (`SuitableYarns.tsx`, dùng quan hệ `suitableYarns` có sẵn trong schema)
+- [x] Section "Mẫu tương tự" (cùng category hoặc craft_type, dùng lại `PatternGrid`)
+- [x] SEO metadata (title, description, openGraph) — OG image động vẫn để Phase 2.1
 
 #### Trang mẫu đã lưu (`/my-patterns`)
-- [ ] Tạo `app/my-patterns/page.tsx` — client component đọc localStorage
-- [ ] Hiển thị grid mẫu đã lưu
-- [ ] Ô ghi chú cá nhân cho từng mẫu (lưu localStorage)
-- [ ] Nút bỏ lưu
-- [ ] Empty state khi chưa lưu mẫu nào
+- [x] Tạo `app/my-patterns/page.tsx` — client component đọc localStorage qua `useSavedPatterns`, fetch dữ liệu đầy đủ qua `/api/patterns?ids=...`
+- [x] Hiển thị grid mẫu đã lưu (`SavedPatternCard.tsx`)
+- [x] Ô ghi chú cá nhân cho từng mẫu (lưu localStorage, lưu khi blur textarea)
+- [x] Nút bỏ lưu
+- [x] Empty state khi chưa lưu mẫu nào
+- *(verify bằng Playwright tạm với 2 mẫu test: filter, accordion, lightbox component dựng đúng, toggle lưu mẫu, ghi chú cá nhân, "Sợi phù hợp" hiển thị giá inline đúng — đều pass; đã xóa data test khỏi DB)*
 
 ### 1.5 Module D — Admin CMS
 
