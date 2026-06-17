@@ -1,0 +1,224 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client"
+  output   = "../lib/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// ─────────────────────────────────────────────────────────────────────────
+// Enums
+// ─────────────────────────────────────────────────────────────────────────
+
+enum FiberCategory {
+  animal
+  plant
+  synthetic
+  blend
+}
+
+enum WeightCategory {
+  lace
+  fingering
+  sport
+  dk
+  worsted
+  bulky
+  super_bulky
+}
+
+enum Washability {
+  machine
+  hand
+  dry_clean_only
+}
+
+enum AllergyRisk {
+  low
+  medium
+  high
+}
+
+enum SellerType {
+  online_shop
+  facebook_page
+  shopee
+  lazada
+  tiki
+  physical_store
+  unclassified
+}
+
+enum SellerCreatedVia {
+  manual
+  excel_auto_create
+}
+
+enum PriceSource {
+  manual
+  excel_import
+}
+
+enum ImportBatchStatus {
+  processing
+  completed
+  completed_with_errors
+  failed
+}
+
+enum CraftType {
+  knitting
+  crochet
+  both
+}
+
+enum Difficulty {
+  beginner
+  intermediate
+  advanced
+}
+
+enum PatternCategory {
+  clothing
+  accessories
+  home_decor
+  amigurumi
+  baby
+}
+
+// ─────────────────────────────────────────────────────────────────────────
+// Models — xem chi tiết tại docs/PRD.md §4
+// ─────────────────────────────────────────────────────────────────────────
+
+model YarnType {
+  id                 String         @id @default(uuid())
+  slug               String         @unique
+  nameVi             String         @map("name_vi")
+  nameEn             String?        @map("name_en")
+  fiberCategory      FiberCategory? @map("fiber_category")
+  fiberComposition   String?        @map("fiber_composition")
+  weightCategory     WeightCategory? @map("weight_category")
+  texture            String[]
+  warmth             Int?
+  softness           Int?
+  durability         Int?
+  stretch            Int?
+  washability        Washability?
+  allergyRisk        AllergyRisk?   @map("allergy_risk")
+  useCases           String[]       @map("use_cases")
+  careInstructions   String?        @map("care_instructions")
+  descriptionVi      String?        @map("description_vi")
+  pros               String[]
+  cons               String[]
+  tags               String[]
+  heroImageUrl       String?        @map("hero_image_url")
+  createdAt          DateTime       @default(now()) @map("created_at")
+  updatedAt          DateTime       @updatedAt @map("updated_at")
+
+  priceListings      PriceListing[]
+  patterns           Pattern[]      @relation("PatternSuitableYarns")
+
+  @@map("yarn_types")
+}
+
+model Seller {
+  id          String           @id @default(uuid())
+  name        String
+  slug        String           @unique
+  type        SellerType       @default(unclassified)
+  url         String?
+  location    String?
+  logoUrl     String?          @map("logo_url")
+  verified    Boolean          @default(false)
+  notes       String?
+  createdVia  SellerCreatedVia @default(manual) @map("created_via")
+  createdAt   DateTime         @default(now()) @map("created_at")
+
+  priceListings PriceListing[]
+
+  @@map("sellers")
+}
+
+model PriceListing {
+  id            String      @id @default(uuid())
+  yarnTypeId    String      @map("yarn_type_id")
+  yarnType      YarnType    @relation(fields: [yarnTypeId], references: [id], onDelete: Cascade)
+  sellerId      String      @map("seller_id")
+  seller        Seller      @relation(fields: [sellerId], references: [id], onDelete: Cascade)
+  pricePer100g  Int         @map("price_per_100g")
+  inStock       Boolean     @default(true) @map("in_stock")
+  lastVerified  DateTime    @map("last_verified")
+  source        PriceSource @default(manual)
+  importBatchId String?     @map("import_batch_id")
+  importBatch   PriceImportBatch? @relation(fields: [importBatchId], references: [id])
+
+  @@unique([yarnTypeId, sellerId])
+  @@map("price_listings")
+}
+
+model PriceImportBatch {
+  id              String            @id @default(uuid())
+  fileName        String            @map("file_name")
+  uploadedAt      DateTime          @default(now()) @map("uploaded_at")
+  uploadedBy      String            @map("uploaded_by")
+  rowCount        Int               @map("row_count")
+  successCount    Int               @map("success_count")
+  newYarnCount    Int               @map("new_yarn_count")
+  newSellerCount  Int               @map("new_seller_count")
+  errorCount      Int               @map("error_count")
+  status          ImportBatchStatus @default(processing)
+  log             Json
+
+  priceListings   PriceListing[]
+
+  @@map("price_import_batches")
+}
+
+model Pattern {
+  id             String           @id @default(uuid())
+  slug           String           @unique
+  title          String
+  craftType      CraftType        @map("craft_type")
+  difficulty     Difficulty
+  category       PatternCategory
+  subcategory    String?
+  thumbnailUrl   String?          @map("thumbnail_url")
+  images         String[]
+  suitableYarns  YarnType[]       @relation("PatternSuitableYarns")
+  yarnWeight     WeightCategory?  @map("yarn_weight")
+  hookNeedleSize String?          @map("hook_needle_size")
+  gauge          String?
+  finishedSize   String?          @map("finished_size")
+  yarnAmount     String?          @map("yarn_amount")
+  timeEstimate   String?          @map("time_estimate")
+  description    String?
+  tags           String[]
+  sourceUrl      String?          @map("source_url")
+  sourceCredit   String?          @map("source_credit")
+  isOriginal     Boolean          @default(true) @map("is_original")
+  savedCount     Int              @default(0) @map("saved_count")
+  createdAt      DateTime         @default(now()) @map("created_at")
+
+  steps          Step[]
+
+  @@map("patterns")
+}
+
+model Step {
+  id        String  @id @default(uuid())
+  patternId String  @map("pattern_id")
+  pattern   Pattern @relation(fields: [patternId], references: [id], onDelete: Cascade)
+  order     Int
+  title     String
+  content   String
+  imageUrl  String? @map("image_url")
+  videoUrl  String? @map("video_url")
+  tip       String?
+
+  @@unique([patternId, order])
+  @@map("steps")
+}

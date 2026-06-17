@@ -17,12 +17,12 @@
 - [ ] Thiết lập Vercel project, link GitHub auto-deploy — *hoãn: cần repo GitHub trước (mục trên), sẽ làm khi founder sẵn sàng deploy*
 
 ### 0.2 Database & Backend
-- [ ] Tạo Supabase project (PostgreSQL)
-- [ ] Cài đặt Prisma ORM, tạo `schema.prisma`
-- [ ] Định nghĩa models: `YarnType`, `Seller`, `PriceListing`, `PriceImportBatch`, `Pattern`, `Step`
-- [ ] Chạy `prisma migrate dev` — tạo bảng lần đầu
-- [ ] Tạo Prisma Client singleton cho Next.js
-- [ ] Thiết lập biến môi trường: `.env.local` + Vercel env vars
+- [ ] Tạo Supabase project (PostgreSQL) — *hoãn: dùng PostgreSQL 17 local (cài qua winget) để dev trước, đổi `DATABASE_URL` sang Supabase khi founder tạo project + sẵn sàng deploy*
+- [x] Cài đặt Prisma ORM (v7.8.0), tạo `schema.prisma`
+- [x] Định nghĩa models: `YarnType`, `Seller`, `PriceListing`, `PriceImportBatch`, `Pattern`, `Step` (kèm đầy đủ enum theo PRD §4)
+- [x] Chạy `prisma migrate dev` — tạo bảng lần đầu (migration `20260617073729_init`, đã verify 6 bảng query được)
+- [x] Tạo Prisma Client singleton cho Next.js (`lib/prisma.ts`, dùng driver adapter `@prisma/adapter-pg` theo yêu cầu của Prisma Client v7 thế hệ mới)
+- [x] Thiết lập biến môi trường: `.env` (dev, gitignored) + `.env.example` (placeholder để track trong git) — *Vercel env vars hoãn cùng với việc deploy Vercel*
 
 ### 0.3 Cấu hình file & image
 - [ ] Tạo tài khoản Cloudinary (hoặc dùng Supabase Storage)
