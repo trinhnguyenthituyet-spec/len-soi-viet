@@ -39,4 +39,23 @@ export const PATTERN_CATEGORY_LABELS: Record<string, string> = {
   baby: "Đồ cho bé",
 };
 
+export const WASHABILITY_LABELS: Record<string, string> = {
+  machine: "Giặt máy được",
+  hand: "Giặt tay",
+  dry_clean_only: "Chỉ giặt khô",
+};
+
+export const ALLERGY_RISK_LABELS: Record<string, string> = {
+  low: "Ít gây dị ứng",
+  medium: "Có thể gây dị ứng",
+  high: "Dễ gây dị ứng",
+};
+
+export const PROPERTY_LABELS = {
+  warmth: "Độ ấm",
+  softness: "Độ mềm",
+  durability: "Độ bền",
+  stretch: "Độ đàn hồi",
+} as const;
+
 export const SAVED_PATTERNS_STORAGE_KEY = "soi-len-viet:saved-patterns";

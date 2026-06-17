@@ -90,3 +90,30 @@ export async function getDistinctUseCases(): Promise<string[]> {
   rows.forEach((r) => r.useCases.forEach((u) => set.add(u)));
   return Array.from(set).sort((a, b) => a.localeCompare(b, "vi"));
 }
+
+export async function getAllYarnSlugs(): Promise<string[]> {
+  const rows = await prisma.yarnType.findMany({ select: { slug: true } });
+  return rows.map((r) => r.slug);
+}
+
+export async function getYarnBySlug(slug: string) {
+  return prisma.yarnType.findUnique({
+    where: { slug },
+    include: {
+      priceListings: {
+        include: { seller: true },
+        orderBy: { pricePer100g: "asc" },
+      },
+    },
+  });
+}
+
+export type YarnDetail = NonNullable<Awaited<ReturnType<typeof getYarnBySlug>>>;
+
+export async function getRelatedPatterns(yarnTypeId: string, limit = 6) {
+  return prisma.pattern.findMany({
+    where: { suitableYarns: { some: { id: yarnTypeId } } },
+    take: limit,
+    orderBy: { savedCount: "desc" },
+  });
+}

@@ -67,17 +67,18 @@
 - [x] Empty state khi không có kết quả — verify bằng Playwright (chạy tạm, đã xóa sau khi xong) với 14 sợi test data: lọc, search, sort, pagination, empty state đều đúng
 
 #### Trang chi tiết sợi (`/yarn/[slug]`)
-- [ ] Tạo `app/yarn/[slug]/page.tsx` — SSG với `generateStaticParams`
-- [ ] Tạo `components/yarn/YarnHero.tsx` — ảnh + tên + badges
-- [ ] Tạo `components/yarn/PropertyBadges.tsx` — icon + số cho warmth/softness/durability...
-- [ ] Tạo `components/yarn/PriceTable.tsx` — bảng so sánh giá các shop
-  - [ ] Cột: shop | giá/100g | còn hàng | ngày cập nhật
-  - [ ] Highlight hàng rẻ nhất
-  - [ ] Badge "Shop mới — chưa xác minh" nếu shop được auto-tạo từ Excel và chưa verified
-- [ ] Tạo `components/yarn/UseCases.tsx` — list công dụng
-- [ ] Tab navigation: Mô tả / Giá & Mua / Mẫu phù hợp
-- [ ] Section "Mẫu dùng sợi này" — grid 4 mẫu liên quan
-- [ ] SEO metadata (title, description, OG image)
+- [x] Tạo `app/yarn/[slug]/page.tsx` — SSG với `generateStaticParams` (+ `revalidate = 3600` ISR)
+- [x] Tạo `components/yarn/YarnHero.tsx` — ảnh + tên + badges
+- [x] Tạo `components/yarn/PropertyBadges.tsx` — icon + số cho warmth/softness/durability...
+- [x] Tạo `components/yarn/PriceTable.tsx` — bảng so sánh giá các shop
+  - [x] Cột: shop | giá/100g | còn hàng | ngày cập nhật
+  - [x] Highlight hàng rẻ nhất (trong số còn hàng) — thêm bonus: badge "Giá có thể đã cũ" (`isPriceStale`, >14 ngày) và link "Mua ngay" nếu shop có `url`
+  - [x] Badge "Shop mới — chưa xác minh" nếu shop được auto-tạo từ Excel và chưa verified
+- [x] Tạo `components/yarn/UseCases.tsx` — list công dụng
+- [x] Tab navigation: Mô tả / Giá & Mua / Mẫu phù hợp (`YarnTabs.tsx`, client component)
+- [x] Section "Mẫu dùng sợi này" — grid 4-6 mẫu liên quan (`RelatedPatterns.tsx`, bên trong tab "Mẫu phù hợp"; hiện trống vì chưa có Pattern nào — Module C ở mục 1.4)
+- [x] SEO metadata (title, description) qua `generateMetadata` + `openGraph` cơ bản — *OG image động (`@vercel/og`) là task riêng ở Phase 2.1, chưa làm ở đây*
+- *(đã verify bằng Playwright tạm + data test 14 sợi: tabs, property bars, price table với rẻ nhất/hết hàng/giá cũ/chưa xác minh, badge "Chưa có mô tả", trang 404 khi slug không tồn tại — đều đúng; đã xóa toàn bộ data test khỏi DB sau khi xong)*
 
 ### 1.3 Module B — So sánh giá
 
