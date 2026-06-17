@@ -13,8 +13,8 @@
 - [x] Cấu hình TypeScript strict mode
 - [x] Cài đặt và cấu hình Tailwind CSS (v4)
 - [ ] Cài đặt shadcn/ui, chọn theme màu sắc phù hợp — *sẽ làm ở mục 0.4*
-- [ ] Tạo repo GitHub, thiết lập branch strategy (main / dev) — *hoãn: chưa tạo remote, chỉ git init + commit local theo quyết định của founder*
-- [ ] Thiết lập Vercel project, link GitHub auto-deploy — *hoãn: cần repo GitHub trước (mục trên), sẽ làm khi founder sẵn sàng deploy*
+- [x] Tạo repo GitHub `trinhnguyenthituyet-spec/len-soi-viet` (public), push nhánh `main` — branch strategy `dev` chưa tạo, sẽ tạo khi cần làm việc song song
+- [ ] Thiết lập Vercel project, link GitHub auto-deploy — *hoãn: founder tự làm hoặc nhờ hướng dẫn khi sẵn sàng deploy*
 
 ### 0.2 Database & Backend
 - [ ] Tạo Supabase project (PostgreSQL) — *hoãn: dùng PostgreSQL 17 local (cài qua winget) để dev trước, đổi `DATABASE_URL` sang Supabase khi founder tạo project + sẵn sàng deploy*
