@@ -25,10 +25,10 @@
 - [x] Thiết lập biến môi trường: `.env` (dev, gitignored) + `.env.example` (placeholder để track trong git) — *Vercel env vars hoãn cùng với việc deploy Vercel*
 
 ### 0.3 Cấu hình file & image
-- [ ] Tạo tài khoản Cloudinary (hoặc dùng Supabase Storage)
-- [ ] Cấu hình Next.js `next.config.js` cho image domains
-- [ ] Tạo helper upload ảnh (server action hoặc API route)
-- [ ] Cài đặt `exceljs` (hoặc `xlsx`/SheetJS) cho parse file Excel
+- [ ] Tạo tài khoản Cloudinary (hoặc dùng Supabase Storage) — *hoãn: chưa có credentials thật, dùng placeholder trong `.env`, founder điền sau*
+- [x] Cấu hình Next.js `next.config.ts` cho image domain `res.cloudinary.com`
+- [x] Tạo helper upload ảnh (server action `lib/upload-image.ts`) — throw lỗi rõ ràng nếu Cloudinary chưa cấu hình thật, không lỗi lúc build
+- [x] Cài đặt `exceljs` cho parse file Excel
 
 ### 0.4 Cấu trúc thư mục
 - [ ] Tạo layout cấu trúc: `app/`, `components/`, `lib/`, `types/`, `public/`
