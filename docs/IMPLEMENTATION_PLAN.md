@@ -31,9 +31,10 @@
 - [x] Cài đặt `exceljs` cho parse file Excel
 
 ### 0.4 Cấu trúc thư mục
-- [ ] Tạo layout cấu trúc: `app/`, `components/`, `lib/`, `types/`, `public/`
-- [ ] Tạo file `types/index.ts` export tất cả TypeScript types từ Prisma schema
-- [ ] Tạo `lib/prisma.ts`, `lib/utils.ts`, `lib/constants.ts`
+- [x] Tạo layout cấu trúc: `app/`, `components/`, `lib/`, `types/`, `public/`
+- [x] Tạo file `types/index.ts` export tất cả TypeScript types từ Prisma schema
+- [x] Tạo `lib/prisma.ts`, `lib/utils.ts`, `lib/constants.ts`
+- [x] *(thêm so với plan gốc)* Cài shadcn/ui (`components/ui/`) + theme pastel ấm (be/hồng nhạt/nâu len) trong `app/globals.css`, build production verify sạch
 
 ---
 
@@ -42,7 +43,7 @@
 ### 1.1 Layout & Navigation
 - [ ] Tạo mockup logo "bé chuột chibi" (SVG/illustration đơn giản) — dùng làm favicon + logo Navbar
 - [ ] Tạo `app/layout.tsx` — root layout với font tiếng Việt (Google Fonts: Be Vietnam Pro)
-- [ ] Chọn bảng màu pastel ấm (be, hồng nhạt, nâu len) cho theme Tailwind
+- [x] Chọn bảng màu pastel ấm (be, hồng nhạt, nâu len) cho theme Tailwind — *đã làm sớm ở mục 0.4 cùng lúc cài shadcn/ui*
 - [ ] Tạo `components/Navbar.tsx` — logo chuột chibi, nav links, search bar
 - [ ] Tạo `components/Footer.tsx` — links, credits
 - [ ] Tạo trang chủ `app/page.tsx` — hero section + 3 feature blocks
