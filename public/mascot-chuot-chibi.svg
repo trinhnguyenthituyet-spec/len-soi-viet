@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120" role="img" aria-label="Bé chuột chibi ôm cuộn len">
+  <ellipse cx="60" cy="100" rx="6" ry="3" fill="#caa27a" opacity="0.3" />
+
+  <!-- tail -->
+  <path d="M 86 78 Q 104 78 100 60" stroke="#caa27a" stroke-width="4" fill="none" stroke-linecap="round" />
+
+  <!-- ears -->
+  <circle cx="32" cy="34" r="14" fill="#d9b08c" />
+  <circle cx="32" cy="34" r="8" fill="#f3d9c4" />
+  <circle cx="78" cy="34" r="14" fill="#d9b08c" />
+  <circle cx="78" cy="34" r="8" fill="#f3d9c4" />
+
+  <!-- head -->
+  <circle cx="55" cy="52" r="30" fill="#e9c4a0" />
+
+  <!-- body -->
+  <ellipse cx="58" cy="92" rx="26" ry="20" fill="#e9c4a0" />
+
+  <!-- yarn ball -->
+  <circle cx="86" cy="92" r="16" fill="#e8a3a3" />
+  <path d="M 74 86 Q 86 92 98 86" stroke="#d97f7f" stroke-width="2" fill="none" />
+  <path d="M 72 94 Q 86 100 100 94" stroke="#d97f7f" stroke-width="2" fill="none" />
+  <path d="M 75 100 Q 86 104 96 100" stroke="#d97f7f" stroke-width="2" fill="none" />
+
+  <!-- cheeks -->
+  <circle cx="42" cy="58" r="5" fill="#f3a6a6" opacity="0.7" />
+  <circle cx="68" cy="58" r="5" fill="#f3a6a6" opacity="0.7" />
+
+  <!-- eyes -->
+  <circle cx="46" cy="50" r="3" fill="#5a4636" />
+  <circle cx="64" cy="50" r="3" fill="#5a4636" />
+
+  <!-- nose -->
+  <ellipse cx="55" cy="58" rx="3" ry="2" fill="#caa27a" />
+
+  <!-- whiskers -->
+  <path d="M 30 56 L 16 54" stroke="#caa27a" stroke-width="1.5" stroke-linecap="round" />
+  <path d="M 30 60 L 16 62" stroke="#caa27a" stroke-width="1.5" stroke-linecap="round" />
+  <path d="M 80 56 L 94 54" stroke="#caa27a" stroke-width="1.5" stroke-linecap="round" />
+  <path d="M 80 60 L 94 62" stroke="#caa27a" stroke-width="1.5" stroke-linecap="round" />
+</svg>

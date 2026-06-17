@@ -41,14 +41,14 @@
 ## Phase 1 — Core Features (Tuần 2–6)
 
 ### 1.1 Layout & Navigation
-- [ ] Tạo mockup logo "bé chuột chibi" (SVG/illustration đơn giản) — dùng làm favicon + logo Navbar
-- [ ] Tạo `app/layout.tsx` — root layout với font tiếng Việt (Google Fonts: Be Vietnam Pro)
+- [x] Tạo mockup logo "bé chuột chibi" (SVG đơn giản, `public/mascot-chuot-chibi.svg` + `app/icon.svg` cho favicon) — dùng làm favicon + logo Navbar
+- [x] Tạo `app/layout.tsx` — root layout với font tiếng Việt (Google Fonts: Be Vietnam Pro)
 - [x] Chọn bảng màu pastel ấm (be, hồng nhạt, nâu len) cho theme Tailwind — *đã làm sớm ở mục 0.4 cùng lúc cài shadcn/ui*
-- [ ] Tạo `components/Navbar.tsx` — logo chuột chibi, nav links, search bar
-- [ ] Tạo `components/Footer.tsx` — links, credits
-- [ ] Tạo trang chủ `app/page.tsx` — hero section + 3 feature blocks
-- [ ] Mobile menu (hamburger) cho Navbar
-- [ ] Responsive kiểm tra trên 375px, 768px, 1280px
+- [x] Tạo `components/Navbar.tsx` — logo chuột chibi, nav links, search bar
+- [x] Tạo `components/Footer.tsx` — links, credits
+- [x] Tạo trang chủ `app/page.tsx` — hero section + 3 feature blocks
+- [x] Mobile menu (hamburger) cho Navbar
+- [x] Responsive kiểm tra trên 375px, 768px, 1280px — verify bằng Playwright (chạy tạm qua npx, không thêm vào package.json): phát hiện + sửa lỗi nav bị wrap/đè logo ở đúng 768px (đổi breakpoint nav từ `md` sang `lg`)
 
 ### 1.2 Module A — Catalog Len Sợi
 
