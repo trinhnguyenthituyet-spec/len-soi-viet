@@ -140,9 +140,10 @@
 - *(verify bằng Playwright: tạo → sửa → hiện đúng trên catalog công khai → xóa → biến mất khỏi catalog công khai, đều pass; phát hiện + sửa 1 UX gap: lỗi server action (VD: Cloudinary chưa cấu hình) trước đó làm crash trang với màn hình lỗi runtime thô, đã sửa hiển thị lỗi thân thiện ngay trong form)*
 
 #### CRUD Seller
-- [ ] Danh sách shop `/admin/sellers`
-- [ ] Form thêm/sửa shop
-- [ ] Toggle verified status
+- [x] Danh sách shop `/admin/sellers` — table với search
+- [x] Form thêm/sửa shop (`lib/seller-queries.ts`, `lib/actions/seller-admin-actions.ts`, `SellerForm.tsx`)
+- [x] Toggle verified status (`ToggleVerifiedButton.tsx`, cập nhật ngay không cần mở form sửa)
+- *(verify bằng Playwright: tạo → toggle verified → sửa, giữ đúng trạng thái — đều pass, không lỗi)*
 
 #### Import & quản lý giá (Excel — tính năng trọng tâm)
 - [ ] Thiết kế template Excel chuẩn 4 cột: STT, Tên sợi, Tên Shop, Giá/100g

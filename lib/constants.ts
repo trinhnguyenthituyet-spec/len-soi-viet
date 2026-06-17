@@ -58,6 +58,16 @@ export const PROPERTY_LABELS = {
   stretch: "Độ đàn hồi",
 } as const;
 
+export const SELLER_TYPE_LABELS: Record<string, string> = {
+  online_shop: "Shop online",
+  facebook_page: "Trang Facebook",
+  shopee: "Shopee",
+  lazada: "Lazada",
+  tiki: "Tiki",
+  physical_store: "Cửa hàng vật lý",
+  unclassified: "Chưa phân loại",
+};
+
 export const SAVED_PATTERNS_STORAGE_KEY = "soi-len-viet:saved-patterns";
 
 export const COMPARE_MAX_YARNS = 4;
