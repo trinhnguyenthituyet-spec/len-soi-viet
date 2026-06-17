@@ -53,18 +53,18 @@
 ### 1.2 Module A — Catalog Len Sợi
 
 #### Trang danh mục sợi (`/yarn`)
-- [ ] Tạo `app/yarn/page.tsx` — server component, fetch danh sách sợi
-- [ ] Tạo `components/yarn/YarnCard.tsx` — card hiển thị 1 loại sợi
-- [ ] Tạo `components/yarn/YarnGrid.tsx` — grid responsive 2/3/4 cols
-- [ ] Tạo `components/yarn/FilterSidebar.tsx` — bộ lọc phía trái
-  - [ ] Filter: fiber_category (checkbox group)
-  - [ ] Filter: weight_category (checkbox group)  
-  - [ ] Filter: use_cases (tags)
-  - [ ] Sort dropdown (A–Z, giá, phổ biến)
-- [ ] Tạo `components/SearchBar.tsx` — debounce search 300ms
-- [ ] Tạo API route `app/api/yarn/route.ts` — GET với query params
-- [ ] Implement pagination hoặc infinite scroll
-- [ ] Empty state khi không có kết quả
+- [x] Tạo `app/yarn/page.tsx` — server component, fetch danh sách sợi
+- [x] Tạo `components/yarn/YarnCard.tsx` — card hiển thị 1 loại sợi
+- [x] Tạo `components/yarn/YarnGrid.tsx` — grid responsive 2/3/4 cols
+- [x] Tạo `components/yarn/FilterSidebar.tsx` — bộ lọc phía trái
+  - [x] Filter: fiber_category (checkbox group)
+  - [x] Filter: weight_category (checkbox group)  
+  - [x] Filter: use_cases (tags) — danh sách tag lấy động từ dữ liệu thật (distinct use_cases trong DB)
+  - [x] Sort dropdown (A–Z, giá, phổ biến — phổ biến = số shop đang bán)
+- [x] Tạo `components/SearchBar.tsx` — debounce search 300ms (component dùng chung, đặt URL query `search`)
+- [x] Tạo API route `app/api/yarn/route.ts` — GET với query params (dùng chung logic `lib/yarn-queries.ts` với trang chính)
+- [x] Implement pagination — page-based (12 sợi/trang), query param `page`
+- [x] Empty state khi không có kết quả — verify bằng Playwright (chạy tạm, đã xóa sau khi xong) với 14 sợi test data: lọc, search, sort, pagination, empty state đều đúng
 
 #### Trang chi tiết sợi (`/yarn/[slug]`)
 - [ ] Tạo `app/yarn/[slug]/page.tsx` — SSG với `generateStaticParams`
