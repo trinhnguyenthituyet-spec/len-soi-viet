@@ -59,3 +59,5 @@ export const PROPERTY_LABELS = {
 } as const;
 
 export const SAVED_PATTERNS_STORAGE_KEY = "soi-len-viet:saved-patterns";
+
+export const COMPARE_MAX_YARNS = 4;

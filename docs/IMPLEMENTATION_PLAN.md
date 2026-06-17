@@ -82,14 +82,15 @@
 
 ### 1.3 Module B — So sánh giá
 
-- [ ] Tạo `app/compare/page.tsx` — trang so sánh
-- [ ] Tạo `components/compare/YarnSelector.tsx` — combobox chọn sợi
-- [ ] Tạo `components/compare/ComparisonTable.tsx` — bảng so sánh side-by-side
-  - [ ] Rows: các đặc tính + giá theo shop
-  - [ ] Sticky header với tên sợi
-- [ ] Logic URL state: `/compare?yarns=slug1,slug2,slug3`
-- [ ] Nút "Copy link để chia sẻ"
-- [ ] Nút "So sánh sợi này" trên trang chi tiết sợi
+- [x] Tạo `app/compare/page.tsx` — trang so sánh
+- [x] Tạo `components/compare/YarnSelector.tsx` — dropdown chọn sợi (combobox đơn giản bằng `<select>`, tối đa 4 sợi), chip hiển thị + bỏ chọn
+- [x] Tạo `components/compare/ComparisonTable.tsx` — bảng so sánh side-by-side
+  - [x] Rows: các đặc tính (chất liệu, độ dày, thành phần, warmth/softness/durability/stretch, cách giặt, dị ứng, công dụng) + giá theo từng shop (union các shop của các sợi đã chọn)
+  - [x] Sticky header với tên sợi — bảng nằm trong container scroll riêng (`max-h-[70vh] overflow-auto`) để sticky hoạt động đúng; phát hiện + sửa bug: sticky trên `<th>` không có scroll container riêng làm đè lên dòng đầu
+- [x] Logic URL state: `/compare?yarns=slug1,slug2,slug3` (giới hạn tối đa 4)
+- [x] Nút "Copy link để chia sẻ" — dùng Clipboard API, có try/catch khi quyền clipboard bị chặn
+- [x] Nút "So sánh sợi này" trên trang chi tiết sợi — điều hướng đến `/compare?yarns=<slug-hiện-tại>`
+- *(verify bằng Playwright tạm: chọn sợi qua dropdown, bảng hiển thị đúng, copy link, điều hướng từ trang chi tiết — đều đúng sau khi sửa 2 bug: import sai làm lộ `pg` vào bundle browser, và sticky header đè dòng đầu; đã xóa data test khỏi DB)*
 
 ### 1.4 Module C — Thư viện mẫu
 

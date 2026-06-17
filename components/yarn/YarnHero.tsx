@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import { FIBER_CATEGORY_LABELS, WEIGHT_CATEGORY_LABELS } from "@/lib/constants";
 import type { YarnDetail } from "@/lib/yarn-queries";
 
@@ -51,6 +52,13 @@ export function YarnHero({ yarn }: { yarn: YarnDetail }) {
             </span>
           ))}
         </div>
+
+        <Link
+          href={`/compare?yarns=${yarn.slug}`}
+          className="mt-2 inline-flex w-fit items-center justify-center rounded-full border border-input px-4 py-2 text-sm font-medium text-foreground transition-colors hover:bg-accent"
+        >
+          So sánh sợi này
+        </Link>
       </div>
     </div>
   );
