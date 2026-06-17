@@ -118,6 +118,7 @@ model YarnType {
   heroImageUrl       String?        @map("hero_image_url")
   createdAt          DateTime       @default(now()) @map("created_at")
   updatedAt          DateTime       @updatedAt @map("updated_at")
+  deletedAt          DateTime?      @map("deleted_at")
 
   priceListings      PriceListing[]
   patterns           Pattern[]      @relation("PatternSuitableYarns")
@@ -137,6 +138,7 @@ model Seller {
   notes       String?
   createdVia  SellerCreatedVia @default(manual) @map("created_via")
   createdAt   DateTime         @default(now()) @map("created_at")
+  deletedAt   DateTime?        @map("deleted_at")
 
   priceListings PriceListing[]
 
@@ -202,6 +204,7 @@ model Pattern {
   isOriginal     Boolean          @default(true) @map("is_original")
   savedCount     Int              @default(0) @map("saved_count")
   createdAt      DateTime         @default(now()) @map("created_at")
+  deletedAt      DateTime?        @map("deleted_at")
 
   steps          Step[]
 

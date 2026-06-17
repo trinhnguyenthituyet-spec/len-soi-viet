@@ -38,6 +38,7 @@ export async function getYarnTypes(filters: YarnFilters) {
   const { search, fiberCategory, weightCategory, useCase, sort = "name_asc", page = 1 } = filters;
 
   const where: Prisma.YarnTypeWhereInput = {
+    deletedAt: null,
     ...(fiberCategory?.length ? { fiberCategory: { in: fiberCategory as FiberCategory[] } } : {}),
     ...(weightCategory?.length
       ? { weightCategory: { in: weightCategory as WeightCategory[] } }
@@ -85,20 +86,20 @@ export async function getYarnTypes(filters: YarnFilters) {
 export type YarnListItem = Awaited<ReturnType<typeof getYarnTypes>>["items"][number];
 
 export async function getDistinctUseCases(): Promise<string[]> {
-  const rows = await prisma.yarnType.findMany({ select: { useCases: true } });
+  const rows = await prisma.yarnType.findMany({ where: { deletedAt: null }, select: { useCases: true } });
   const set = new Set<string>();
   rows.forEach((r) => r.useCases.forEach((u) => set.add(u)));
   return Array.from(set).sort((a, b) => a.localeCompare(b, "vi"));
 }
 
 export async function getAllYarnSlugs(): Promise<string[]> {
-  const rows = await prisma.yarnType.findMany({ select: { slug: true } });
+  const rows = await prisma.yarnType.findMany({ where: { deletedAt: null }, select: { slug: true } });
   return rows.map((r) => r.slug);
 }
 
 export async function getYarnBySlug(slug: string) {
-  return prisma.yarnType.findUnique({
-    where: { slug },
+  return prisma.yarnType.findFirst({
+    where: { slug, deletedAt: null },
     include: {
       priceListings: {
         include: { seller: true },
@@ -110,8 +111,13 @@ export async function getYarnBySlug(slug: string) {
 
 export type YarnDetail = NonNullable<Awaited<ReturnType<typeof getYarnBySlug>>>;
 
+export async function getYarnById(id: string) {
+  return prisma.yarnType.findFirst({ where: { id, deletedAt: null } });
+}
+
 export async function getAllYarnsBasic() {
   return prisma.yarnType.findMany({
+    where: { deletedAt: null },
     select: { id: true, slug: true, nameVi: true },
     orderBy: { nameVi: "asc" },
   });
@@ -120,7 +126,7 @@ export async function getAllYarnsBasic() {
 export async function getYarnsBySlugList(slugs: string[]): Promise<YarnDetail[]> {
   if (slugs.length === 0) return [];
   const yarns = await prisma.yarnType.findMany({
-    where: { slug: { in: slugs } },
+    where: { slug: { in: slugs }, deletedAt: null },
     include: {
       priceListings: {
         include: { seller: true },
@@ -134,7 +140,7 @@ export async function getYarnsBySlugList(slugs: string[]): Promise<YarnDetail[]>
 
 export async function getRelatedPatterns(yarnTypeId: string, limit = 6) {
   return prisma.pattern.findMany({
-    where: { suitableYarns: { some: { id: yarnTypeId } } },
+    where: { deletedAt: null, suitableYarns: { some: { id: yarnTypeId } } },
     take: limit,
     orderBy: { savedCount: "desc" },
   });

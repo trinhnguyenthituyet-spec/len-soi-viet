@@ -49,6 +49,7 @@ export async function getPatterns(filters: PatternFilters) {
   } = filters;
 
   const where: Prisma.PatternWhereInput = {
+    deletedAt: null,
     ...(craftType?.length ? { craftType: { in: craftType as CraftType[] } } : {}),
     ...(difficulty?.length ? { difficulty: { in: difficulty as Difficulty[] } } : {}),
     ...(category?.length ? { category: { in: category as PatternCategory[] } } : {}),
@@ -84,20 +85,20 @@ export async function getPatterns(filters: PatternFilters) {
 export type PatternListItem = Awaited<ReturnType<typeof getPatterns>>["items"][number];
 
 export async function getDistinctPatternTags(): Promise<string[]> {
-  const rows = await prisma.pattern.findMany({ select: { tags: true } });
+  const rows = await prisma.pattern.findMany({ where: { deletedAt: null }, select: { tags: true } });
   const set = new Set<string>();
   rows.forEach((r) => r.tags.forEach((t) => set.add(t)));
   return Array.from(set).sort((a, b) => a.localeCompare(b, "vi"));
 }
 
 export async function getAllPatternSlugs(): Promise<string[]> {
-  const rows = await prisma.pattern.findMany({ select: { slug: true } });
+  const rows = await prisma.pattern.findMany({ where: { deletedAt: null }, select: { slug: true } });
   return rows.map((r) => r.slug);
 }
 
 export async function getPatternBySlug(slug: string) {
-  return prisma.pattern.findUnique({
-    where: { slug },
+  return prisma.pattern.findFirst({
+    where: { slug, deletedAt: null },
     include: {
       steps: { orderBy: { order: "asc" } },
       suitableYarns: { include: { priceListings: true } },
@@ -110,6 +111,7 @@ export type PatternDetail = NonNullable<Awaited<ReturnType<typeof getPatternBySl
 export async function getSimilarPatterns(pattern: PatternDetail, limit = 4) {
   return prisma.pattern.findMany({
     where: {
+      deletedAt: null,
       id: { not: pattern.id },
       OR: [{ category: pattern.category }, { craftType: pattern.craftType }],
     },
@@ -120,7 +122,7 @@ export async function getSimilarPatterns(pattern: PatternDetail, limit = 4) {
 
 export async function getPatternsByIds(ids: string[]): Promise<PatternListItem[]> {
   if (ids.length === 0) return [];
-  const patterns = await prisma.pattern.findMany({ where: { id: { in: ids } } });
+  const patterns = await prisma.pattern.findMany({ where: { id: { in: ids }, deletedAt: null } });
   const byId = new Map(patterns.map((p) => [p.id, p]));
   return ids.map((id) => byId.get(id)).filter((p): p is PatternListItem => Boolean(p));
 }

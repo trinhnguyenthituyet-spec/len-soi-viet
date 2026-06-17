@@ -132,11 +132,12 @@
 - *(verify bằng Playwright: chưa login bị redirect đúng, sai mật khẩu bị từ chối, đăng nhập đúng vào được dashboard, đăng xuất quay lại login — đều pass sau khi sửa bug matcher)*
 
 #### CRUD YarnType
-- [ ] Danh sách sợi `/admin/yarn` — table với search + filter
-- [ ] Form tạo mới `/admin/yarn/new`
-- [ ] Form chỉnh sửa `/admin/yarn/[id]/edit`
-- [ ] Upload ảnh hero
-- [ ] Xóa (soft delete)
+- [x] Danh sách sợi `/admin/yarn` — table với search (dùng lại `getYarnTypes`/`SearchBar`)
+- [x] Form tạo mới `/admin/yarn/new`
+- [x] Form chỉnh sửa `/admin/yarn/[id]/edit`
+- [x] Upload ảnh hero (qua `lib/upload-image.ts` đã có từ Phase 0.3; lỗi khi chưa cấu hình Cloudinary hiển thị ngay trong form qua `useActionState`, không crash trang)
+- [x] Xóa (soft delete) — *đổi schema: thêm `deletedAt: DateTime?` vào `YarnType`/`Seller`/`Pattern` (đã hỏi và chốt với founder), migration `add_soft_delete`; mọi query công khai + admin đều lọc `deletedAt: null`*
+- *(verify bằng Playwright: tạo → sửa → hiện đúng trên catalog công khai → xóa → biến mất khỏi catalog công khai, đều pass; phát hiện + sửa 1 UX gap: lỗi server action (VD: Cloudinary chưa cấu hình) trước đó làm crash trang với màn hình lỗi runtime thô, đã sửa hiển thị lỗi thân thiện ngay trong form)*
 
 #### CRUD Seller
 - [ ] Danh sách shop `/admin/sellers`
