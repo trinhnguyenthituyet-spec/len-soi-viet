@@ -124,11 +124,12 @@
 ### 1.5 Module D — Admin CMS
 
 #### Setup Admin
-- [ ] Cài đặt NextAuth.js — email/password login đơn giản
-- [ ] Tạo admin user seed trong database
-- [ ] Tạo middleware bảo vệ route `/admin/*`
-- [ ] Tạo `app/admin/layout.tsx` — admin sidebar layout
-- [ ] Trang đăng nhập admin `/admin/login`
+- [x] Cài đặt NextAuth.js — email/password login đơn giản (NextAuth v4.24.14 — đã hỏi và chốt dùng v4 ổn định thay vì v5/Auth.js beta)
+- [x] Tạo admin user seed trong database — *đổi quyết định: chỉ 1 admin (chính founder), lưu qua `.env` (`ADMIN_EMAIL`/`ADMIN_PASSWORD`, so sánh bằng `timingSafeEqual`), không thêm model Prisma mới — đã hỏi và chốt với founder để tránh lệch schema không cần thiết*
+- [x] Tạo `proxy.ts` (Next.js 16 đổi tên từ `middleware.ts`) bảo vệ route `/admin/*` qua `withAuth` — phát hiện + sửa bug: matcher ban đầu chỉ khớp `/admin/...` (có path con), không khớp `/admin` trần, khiến trang dashboard gốc không được bảo vệ
+- [x] Tạo `app/admin/(dashboard)/layout.tsx` — admin sidebar layout (dùng route group để trang login không bị bọc sidebar)
+- [x] Trang đăng nhập admin `/admin/login`
+- *(verify bằng Playwright: chưa login bị redirect đúng, sai mật khẩu bị từ chối, đăng nhập đúng vào được dashboard, đăng xuất quay lại login — đều pass sau khi sửa bug matcher)*
 
 #### CRUD YarnType
 - [ ] Danh sách sợi `/admin/yarn` — table với search + filter
