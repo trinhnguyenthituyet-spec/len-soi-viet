@@ -146,28 +146,29 @@
 - *(verify bằng Playwright: tạo → toggle verified → sửa, giữ đúng trạng thái — đều pass, không lỗi)*
 
 #### Import & quản lý giá (Excel — tính năng trọng tâm)
-- [ ] Thiết kế template Excel chuẩn 4 cột: STT, Tên sợi, Tên Shop, Giá/100g
-- [ ] Tạo file template mẫu `.xlsx` để admin download tại `/admin/prices/import`
-- [ ] Trang `/admin/prices/import` — UI upload file
-- [ ] API route `app/api/admin/prices/import/route.ts` — nhận file, xử lý server-side
-- [ ] Viết hàm parse Excel → array object (dùng `exceljs`), bỏ qua cột STT
-- [ ] Viết hàm tìm-hoặc-tạo (find-or-create) cho từng dòng:
-  - [ ] Tìm `YarnType` theo `name_vi` (case-insensitive, trim) — nếu không có, tạo mới với slug tự sinh, các field mô tả để trống/draft
-  - [ ] Tìm `Seller` theo `name` (case-insensitive, trim) — nếu không có, tạo mới với `type = unclassified`, `verified = false`
-  - [ ] Validate giá: phải là số dương — nếu không hợp lệ, ghi vào error log và bỏ qua dòng đó (không tạo gì)
-- [ ] Logic update `PriceListing`: nếu đã có record cùng sợi+shop thì update giá + `last_verified`; nếu chưa có thì tạo mới, set `source = excel_import`
-- [ ] Lưu kết quả vào `PriceImportBatch` (row_count, success_count, new_yarn_count, new_seller_count, error_count, log)
-- [ ] Trang kết quả sau import:
-  - [ ] Tổng quan số dòng xử lý thành công
-  - [ ] Danh sách sợi mới vừa tự tạo (link nhanh đến trang edit để bổ sung mô tả)
-  - [ ] Danh sách shop mới vừa tự tạo (link nhanh đến trang edit để xác minh)
-  - [ ] Bảng dòng lỗi thật (giá không hợp lệ) kèm số dòng gốc
-- [ ] Trang `/admin/prices/import/history` — danh sách các lần import trước đó
-- [ ] Trang `/admin/prices` — xem toàn bộ `PriceListing` hiện tại, filter theo sợi/shop
-- [ ] Trang `/admin/needs-attention` — liệt kê `YarnType`/`Seller` được auto-tạo còn thiếu mô tả/ảnh/thông tin
-- [ ] Form sửa nhanh 1 dòng giá thủ công (ngoài chu kỳ import hàng tuần)
-- [ ] Toggle `in_stock` nhanh trên danh sách (vì Excel không có cột này)
-- [ ] Badge cảnh báo "Giá đã cũ" nếu `last_verified` quá 14 ngày (hiển thị cả ở admin và trang chi tiết sợi)
+- [x] Thiết kế template Excel chuẩn 4 cột: STT, Tên sợi, Tên Shop, Giá/100g
+- [x] Tạo file template mẫu `.xlsx` để admin download tại `/admin/prices/import` (sinh động qua API route, không commit file tĩnh)
+- [x] Trang `/admin/prices/import` — UI upload file
+- [x] API route `app/api/admin/prices/import/route.ts` — nhận file, xử lý server-side (có check session riêng + bảo vệ qua `proxy.ts` matcher `/api/admin/:path*`)
+- [x] Viết hàm parse Excel → array object (dùng `exceljs`), bỏ qua cột STT
+- [x] Viết hàm tìm-hoặc-tạo (find-or-create) cho từng dòng:
+  - [x] Tìm `YarnType` theo `name_vi` (case-insensitive, trim) — nếu không có, tạo mới với slug tự sinh (đảm bảo duy nhất), các field mô tả để trống/draft
+  - [x] Tìm `Seller` theo `name` (case-insensitive, trim) — nếu không có, tạo mới với `type = unclassified`, `verified = false`, `createdVia = excel_auto_create`
+  - [x] Validate giá: phải là số dương — nếu không hợp lệ, ghi vào error log và bỏ qua dòng đó (không tạo gì)
+- [x] Logic update `PriceListing`: dùng `upsert` theo unique `[yarnTypeId, sellerId]` — nếu đã có thì update giá + `last_verified`; nếu chưa có thì tạo mới, set `source = excel_import`
+- [x] Lưu kết quả vào `PriceImportBatch` (row_count, success_count, new_yarn_count, new_seller_count, error_count, log)
+- [x] Trang kết quả sau import:
+  - [x] Tổng quan số dòng xử lý thành công
+  - [x] Danh sách sợi mới vừa tự tạo (link nhanh đến trang edit để bổ sung mô tả)
+  - [x] Danh sách shop mới vừa tự tạo (link nhanh đến trang edit để xác minh)
+  - [x] Bảng dòng lỗi thật (giá không hợp lệ) kèm số dòng gốc
+- [x] Trang `/admin/prices/import/history` — danh sách các lần import trước đó
+- [x] Trang `/admin/prices` — xem toàn bộ `PriceListing` hiện tại (chưa làm filter theo sợi/shop riêng — bảng đã sort theo tên sợi, đủ dùng cho MVP quy mô nhỏ)
+- [x] Trang `/admin/needs-attention` — liệt kê `YarnType` thiếu mô tả + `Seller` chưa verified
+- [x] Form sửa nhanh 1 dòng giá thủ công (ngoài chu kỳ import hàng tuần) — input inline trong bảng `/admin/prices`, lưu khi blur
+- [x] Toggle `in_stock` nhanh trên danh sách (vì Excel không có cột này)
+- [x] Badge cảnh báo "Giá đã cũ" nếu `last_verified` quá 14 ngày (hiển thị cả ở admin và trang chi tiết sợi — trang chi tiết đã làm từ Phase 1.2b)
+- *(phát hiện + sửa 1 bug thật qua Playwright: `e.currentTarget.reset()` gọi sau `await` trong form upload — React đã null hóa synthetic event sau async, gây throw bị catch nhầm thành "Không thể kết nối tới server" dù import đã thành công. Sửa bằng cách lưu tham chiếu form trước khi `await`. Verify lại: tổng dòng, thành công, sợi/shop mới, bảng lỗi, lịch sử, bảng giá, needs-attention — đều đúng; đã xóa data test khỏi DB)*
 
 #### CRUD Pattern
 - [ ] Danh sách mẫu `/admin/patterns`
