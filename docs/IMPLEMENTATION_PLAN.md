@@ -9,12 +9,12 @@
 ## Phase 0 — Setup & Foundation (Tuần 1)
 
 ### 0.1 Khởi tạo dự án
-- [ ] Tạo Next.js 14 project với App Router (`npx create-next-app`)
-- [ ] Cấu hình TypeScript strict mode
-- [ ] Cài đặt và cấu hình Tailwind CSS
-- [ ] Cài đặt shadcn/ui, chọn theme màu sắc phù hợp
-- [ ] Tạo repo GitHub, thiết lập branch strategy (main / dev)
-- [ ] Thiết lập Vercel project, link GitHub auto-deploy
+- [x] Tạo Next.js project với App Router (`npx create-next-app`) — thực tế dùng **Next.js 16** (xem ghi chú quyết định trong CLAUDE.md/PRD §7), không phải v14 do `@latest` đã lên version mới
+- [x] Cấu hình TypeScript strict mode
+- [x] Cài đặt và cấu hình Tailwind CSS (v4)
+- [ ] Cài đặt shadcn/ui, chọn theme màu sắc phù hợp — *sẽ làm ở mục 0.4*
+- [ ] Tạo repo GitHub, thiết lập branch strategy (main / dev) — *hoãn: chưa tạo remote, chỉ git init + commit local theo quyết định của founder*
+- [ ] Thiết lập Vercel project, link GitHub auto-deploy — *hoãn: cần repo GitHub trước (mục trên), sẽ làm khi founder sẵn sàng deploy*
 
 ### 0.2 Database & Backend
 - [ ] Tạo Supabase project (PostgreSQL)
