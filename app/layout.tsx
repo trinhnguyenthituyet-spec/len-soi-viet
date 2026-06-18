@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Analytics } from "@vercel/analytics/next";
 import { Be_Vietnam_Pro } from "next/font/google";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
@@ -34,6 +35,7 @@ export default function RootLayout({
           <Footer />
           <ScrollToTopButton />
         </ToastProvider>
+        <Analytics />
       </body>
     </html>
   );

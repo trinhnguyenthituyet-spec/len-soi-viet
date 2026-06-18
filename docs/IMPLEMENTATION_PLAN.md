@@ -226,21 +226,21 @@
 ## Phase 3 — Launch (Tuần 9–10)
 
 ### 3.1 Pre-launch
-- [ ] (Tùy chọn, không bắt buộc cho MVP) Thiết lập domain riêng nếu cần — MVP dùng domain mặc định `*.vercel.app`
-- [ ] Cấu hình SSL (tự động với Vercel)
-- [ ] Kiểm tra tất cả links không bị 404
-- [ ] Kiểm tra form admin hoạt động đúng trên production
-- [ ] Backup database trước launch
+- [ ] (Tùy chọn, không bắt buộc cho MVP) Thiết lập domain riêng nếu cần — MVP dùng domain mặc định `*.vercel.app` — *việc của founder (mua domain + trỏ DNS)*
+- [ ] Cấu hình SSL (tự động với Vercel) — *không cần làm gì, Vercel tự cấp khi deploy thật — chỉ áp dụng sau khi founder deploy*
+- [x] Kiểm tra tất cả links không bị 404 — verify thật bằng Playwright: crawl từ trang chủ qua toàn bộ link nội bộ tìm thấy (7 trang công khai: `/`, `/yarn`, `/patterns`, `/compare`, `/my-patterns`, `/yarn/[slug]`, `/patterns/[slug]`), tất cả trả về 200, không có 404
+- [ ] Kiểm tra form admin hoạt động đúng trên production — *việc của founder, cần site đã deploy thật với env vars thật (Supabase, Cloudinary, NextAuth secret) — tôi chỉ test được trên local/dev DB*
+- [ ] Backup database trước launch — *việc của founder, cần quyền truy cập Supabase production*
 
 ### 3.2 Monitoring
-- [ ] Tích hợp Vercel Analytics (page views, traffic)
-- [ ] Tích hợp Sentry (error tracking, free tier)
-- [ ] Thiết lập alert khi site down
+- [x] Tích hợp Vercel Analytics (page views, traffic) — `@vercel/analytics`, thêm `<Analytics />` vào `app/layout.tsx`. Tự động no-op khi không chạy trên Vercel, không cần làm gì thêm khi deploy
+- [x] Tích hợp Sentry (error tracking, free tier) — đã hỏi và chốt: wire sẵn code với DSN rỗng (giống cách làm với Cloudinary trước đây). `instrumentation-client.ts` (client), `sentry.server.config.ts` + `sentry.edge.config.ts` (server/edge), `instrumentation.ts` (`register()` + `onRequestError`), `next.config.ts` bọc qua `withSentryConfig` — theo đúng convention file-convention mới của Next.js 16 (`instrumentation-client.ts` thay cho `sentry.client.config.ts` cũ). Verify: build production sạch, không gửi event nào vì DSN rỗng (`enabled: false`). **Founder cần tạo project tại sentry.io rồi điền `SENTRY_DSN`, `NEXT_PUBLIC_SENTRY_DSN` (cùng giá trị), và tùy chọn `SENTRY_ORG`/`SENTRY_PROJECT`/`SENTRY_AUTH_TOKEN` (để upload source map) vào env Vercel.**
+- [ ] Thiết lập alert khi site down — *việc của founder, cần dịch vụ ngoài (UptimeRobot, Better Uptime, hoặc Vercel Monitoring) — cần tài khoản thật*
 
 ### 3.3 Sau launch
-- [ ] Announce trong các Facebook group đan/móc VN
-- [ ] Thu thập feedback người dùng đầu tiên
-- [ ] Lập backlog cho Phase 2 (tài khoản người dùng, crowdsource giá)
+- [ ] Announce trong các Facebook group đan/móc VN — *việc của founder*
+- [ ] Thu thập feedback người dùng đầu tiên — *việc của founder, cần site đã có người dùng thật*
+- [ ] Lập backlog cho Phase 2 (tài khoản người dùng, crowdsource giá) — *có thể làm cùng founder khi cần, chưa cấp thiết lúc này*
 
 ---
 
