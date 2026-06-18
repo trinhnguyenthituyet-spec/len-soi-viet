@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { SavedPatternCard } from "@/components/pattern/SavedPatternCard";
+import { adjustPatternSavedCount } from "@/lib/actions/pattern-save-actions";
 import type { PatternListItem } from "@/lib/pattern-queries";
 import { useSavedPatterns } from "@/lib/use-saved-patterns";
 
@@ -9,6 +10,11 @@ export default function MyPatternsPage() {
   const { entries, hydrated, removeSaved, updateNotes } = useSavedPatterns();
   const [patterns, setPatterns] = useState<PatternListItem[]>([]);
   const [loading, setLoading] = useState(true);
+
+  function handleRemove(patternId: string) {
+    removeSaved(patternId);
+    adjustPatternSavedCount(patternId, -1).catch(() => {});
+  }
 
   useEffect(() => {
     if (!hydrated) return;
@@ -52,7 +58,7 @@ export default function MyPatternsPage() {
                   key={pattern.id}
                   pattern={pattern}
                   entry={entry}
-                  onRemove={removeSaved}
+                  onRemove={handleRemove}
                   onNotesChange={updateNotes}
                 />
               );

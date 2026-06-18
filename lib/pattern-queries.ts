@@ -108,6 +108,14 @@ export async function getPatternBySlug(slug: string) {
 
 export type PatternDetail = NonNullable<Awaited<ReturnType<typeof getPatternBySlug>>>;
 
+export async function getTopSavedPatterns(limit = 5) {
+  return prisma.pattern.findMany({
+    where: { deletedAt: null, savedCount: { gt: 0 } },
+    orderBy: { savedCount: "desc" },
+    take: limit,
+  });
+}
+
 export async function getPatternById(id: string) {
   return prisma.pattern.findFirst({
     where: { id, deletedAt: null },

@@ -179,8 +179,9 @@
 - *(verify bằng Playwright: tạo mẫu kèm 2 bước, đổi thứ tự bước (up button), hiển thị đúng trên trang công khai kèm sợi phù hợp — đều pass. Trong lúc debug có hiện tượng tưởng là bug (trang không chuyển sau khi lưu) nhưng hóa ra do test script tự dùng tên mẫu trùng lặp giữa các lần chạy, kích hoạt đúng validation "trùng slug" — không phải lỗi thật; đã xóa data test khỏi DB)*
 
 #### Admin Dashboard
-- [ ] Trang `/admin` — số liệu: tổng sợi, mẫu, lượt xem hôm nay
-- [ ] Danh sách mẫu được lưu nhiều nhất
+- [x] Trang `/admin` — số liệu: tổng sợi, tổng mẫu, tổng shop — *"lượt xem hôm nay" hoãn: chưa có hạ tầng theo dõi page view, đã hỏi và chốt với founder làm đúng lúc tích hợp Vercel Analytics ở Phase 3.2 theo plan*
+- [x] Danh sách mẫu được lưu nhiều nhất — *đổi quyết định: thêm `lib/actions/pattern-save-actions.ts` (`adjustPatternSavedCount`) gọi server khi bấm "Lưu mẫu"/"Bỏ lưu" để `Pattern.savedCount` có ý nghĩa thật, trong khi trạng thái đã-lưu-hay-chưa của từng người vẫn ở localStorage (không cần đăng nhập, đúng PRD) — đã hỏi và chốt với founder*
+- *(verify bằng Playwright: bấm "Lưu mẫu này" trên trang công khai không cần login → dashboard admin hiển thị đúng "1 lượt lưu" — pass; đã xóa data test khỏi DB)*
 
 ---
 
