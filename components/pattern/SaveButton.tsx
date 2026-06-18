@@ -3,15 +3,18 @@
 import { adjustPatternSavedCount } from "@/lib/actions/pattern-save-actions";
 import { cn } from "@/lib/utils";
 import { useSavedPatterns } from "@/lib/use-saved-patterns";
+import { useToast } from "@/components/ui/ToastProvider";
 
 export function SaveButton({ patternId }: { patternId: string }) {
   const { isSaved, toggleSave, hydrated } = useSavedPatterns();
+  const { showToast } = useToast();
   const saved = isSaved(patternId);
 
   function handleClick() {
     const willBeSaved = !saved;
     toggleSave(patternId);
     adjustPatternSavedCount(patternId, willBeSaved ? 1 : -1).catch(() => {});
+    showToast(willBeSaved ? "Đã lưu mẫu vào danh sách của bạn" : "Đã bỏ lưu mẫu");
   }
 
   return (

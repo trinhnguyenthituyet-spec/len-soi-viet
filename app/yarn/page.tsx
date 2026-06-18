@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { SearchBar } from "@/components/SearchBar";
+import { Breadcrumb } from "@/components/ui/Breadcrumb";
 import { FilterSidebar } from "@/components/yarn/FilterSidebar";
 import { YarnGrid } from "@/components/yarn/YarnGrid";
 import {
@@ -73,6 +74,7 @@ export default async function YarnCatalogPage({
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(buildItemListJsonLd(items)) }}
       />
+      <Breadcrumb items={[{ label: "Trang chủ", href: "/" }, { label: "Len sợi" }]} />
       <h1 className="text-2xl font-bold text-foreground sm:text-3xl">Catalog len sợi</h1>
       <p className="mt-1 text-muted-foreground">
         {total} loại sợi {search && <>khớp với &quot;{search}&quot;</>}

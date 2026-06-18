@@ -198,12 +198,12 @@
 - [x] Tối ưu ảnh: lazy loading (mặc định của `next/image` trừ ảnh `priority`) + WebP/AVIF (tự động qua Vercel Image Optimization) + hiệu ứng fade-in khi tải xong (`components/ui/FadeImage.tsx`, áp dụng cho card sợi/mẫu + gallery — không dùng cho ảnh `priority`/LCP vì fade sẽ phản tác dụng)
 
 ### 2.2 UX Polish
-- [ ] Loading skeleton cho danh sách sợi và mẫu
-- [ ] Error boundary + error pages (404, 500)
-- [ ] Toast notifications (lưu mẫu thành công, copy link...)
-- [ ] Scroll to top button
-- [ ] Breadcrumb navigation
-- [ ] "Back to top" khi scroll dài trên trang chi tiết
+- [x] Loading skeleton cho danh sách sợi và mẫu (`components/ui/CardGridSkeleton.tsx` dùng chung, `app/yarn/loading.tsx` + `app/patterns/loading.tsx`) — verify tình cờ: screenshot chụp đúng lúc chuyển trang đã bắt được skeleton hiển thị thật
+- [x] Error boundary + error pages (404, 500) — `app/not-found.tsx`, `app/error.tsx` (route-level), `app/global-error.tsx` (root-level, dự phòng lỗi ở chính layout)
+- [x] Toast notifications (lưu mẫu thành công, copy link...) — tự viết `components/ui/ToastProvider.tsx` (context + portal cố định, không thêm dependency mới — tận dụng `tw-animate-css` đã có từ shadcn), gắn vào `SaveButton` + `CopyLinkButton`
+- [x] Scroll to top button (`components/ui/ScrollToTopButton.tsx`, global trong root layout, hiện khi scroll >400px) — phát hiện hiện tượng lạ khi test (Playwright force-click không scroll), điều tra bằng raw DOM click xác nhận đây chỉ là nhiễu từ dev overlay của Next.js lúc test, không phải bug thật
+- [x] Breadcrumb navigation (`components/ui/Breadcrumb.tsx`, áp dụng cho `/yarn`, `/yarn/[slug]`, `/patterns`, `/patterns/[slug]`)
+- [x] "Back to top" khi scroll dài trên trang chi tiết — dùng chung component `ScrollToTopButton` ở trên (global, không cần làm riêng cho trang chi tiết)
 
 ### 2.3 Content Seed
 - [ ] Viết nội dung 30 loại sợi cơ bản (founder tự viết: mô tả, đặc tính, công dụng)

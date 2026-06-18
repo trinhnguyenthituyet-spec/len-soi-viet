@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Be_Vietnam_Pro } from "next/font/google";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
+import { ScrollToTopButton } from "@/components/ui/ScrollToTopButton";
+import { ToastProvider } from "@/components/ui/ToastProvider";
 import { SITE_URL } from "@/lib/constants";
 import "./globals.css";
 
@@ -26,9 +28,12 @@ export default function RootLayout({
   return (
     <html lang="vi" className={`${beVietnamPro.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col">
-        <Navbar />
-        <main className="flex-1">{children}</main>
-        <Footer />
+        <ToastProvider>
+          <Navbar />
+          <main className="flex-1">{children}</main>
+          <Footer />
+          <ScrollToTopButton />
+        </ToastProvider>
       </body>
     </html>
   );

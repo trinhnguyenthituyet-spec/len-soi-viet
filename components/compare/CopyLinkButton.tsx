@@ -1,17 +1,20 @@
 "use client";
 
 import { useState } from "react";
+import { useToast } from "@/components/ui/ToastProvider";
 
 export function CopyLinkButton() {
   const [copied, setCopied] = useState(false);
+  const { showToast } = useToast();
 
   async function handleCopy() {
     try {
       await navigator.clipboard.writeText(window.location.href);
       setCopied(true);
+      showToast("Đã copy link so sánh");
       setTimeout(() => setCopied(false), 2000);
     } catch {
-      // clipboard permission denied or unavailable — silently ignore
+      showToast("Không thể copy link — thử lại hoặc copy thủ công từ thanh địa chỉ");
     }
   }
 

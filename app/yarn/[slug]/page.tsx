@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { Breadcrumb } from "@/components/ui/Breadcrumb";
 import { PriceTable } from "@/components/yarn/PriceTable";
 import { PropertyBadges } from "@/components/yarn/PropertyBadges";
 import { RelatedPatterns } from "@/components/yarn/RelatedPatterns";
@@ -84,6 +85,13 @@ export default async function YarnDetailPage({
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(buildProductJsonLd(yarn)) }}
+      />
+      <Breadcrumb
+        items={[
+          { label: "Trang chủ", href: "/" },
+          { label: "Len sợi", href: "/yarn" },
+          { label: yarn.nameVi },
+        ]}
       />
       <YarnHero yarn={yarn} />
 

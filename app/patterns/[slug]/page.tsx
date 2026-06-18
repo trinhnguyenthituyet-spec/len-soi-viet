@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { PatternGallery } from "@/components/pattern/PatternGallery";
+import { Breadcrumb } from "@/components/ui/Breadcrumb";
 import { PatternGrid } from "@/components/pattern/PatternGrid";
 import { PatternInfo } from "@/components/pattern/PatternInfo";
 import { SaveButton } from "@/components/pattern/SaveButton";
@@ -56,6 +57,13 @@ export default async function PatternDetailPage({
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-8 sm:px-6">
+      <Breadcrumb
+        items={[
+          { label: "Trang chủ", href: "/" },
+          { label: "Mẫu đan/móc", href: "/patterns" },
+          { label: pattern.title },
+        ]}
+      />
       <div className="grid gap-8 lg:grid-cols-[1fr_320px]">
         <div className="flex flex-col gap-6">
           <PatternGallery images={galleryImages} title={pattern.title} />

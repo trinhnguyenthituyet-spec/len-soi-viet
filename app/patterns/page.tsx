@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { SearchBar } from "@/components/SearchBar";
+import { Breadcrumb } from "@/components/ui/Breadcrumb";
 import { PatternFilterSidebar } from "@/components/pattern/PatternFilterSidebar";
 import { PatternGrid } from "@/components/pattern/PatternGrid";
 import {
@@ -53,6 +54,7 @@ export default async function PatternsPage({
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-8 sm:px-6">
+      <Breadcrumb items={[{ label: "Trang chủ", href: "/" }, { label: "Mẫu đan/móc" }]} />
       <h1 className="text-2xl font-bold text-foreground sm:text-3xl">Thư viện mẫu đan/móc</h1>
       <p className="mt-1 text-muted-foreground">
         {total} mẫu {search && <>khớp với &quot;{search}&quot;</>}
