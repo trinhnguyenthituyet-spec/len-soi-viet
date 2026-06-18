@@ -206,12 +206,12 @@
 - [x] "Back to top" khi scroll dài trên trang chi tiết — dùng chung component `ScrollToTopButton` ở trên (global, không cần làm riêng cho trang chi tiết)
 
 ### 2.3 Content Seed
-- [ ] Viết nội dung 30 loại sợi cơ bản (founder tự viết: mô tả, đặc tính, công dụng)
-- [ ] Chuẩn bị file Excel giá đầu tiên theo template chuẩn, import thử qua `/admin/prices/import`
-- [ ] Kiểm tra kết quả import đầu tiên — sửa lỗi mapping tên sợi/shop nếu có
-- [ ] Tạo 20 mẫu đan/móc cơ bản với hướng dẫn (founder tự viết)
-- [ ] Chuẩn bị ảnh cho tất cả sợi và mẫu
-- [ ] Tạo seed script `prisma/seed.ts` (cho YarnType, Pattern — không seed PriceListing vì sẽ import qua Excel)
+- [ ] Viết nội dung 30 loại sợi cơ bản (founder tự viết: mô tả, đặc tính, công dụng) — *việc của founder, đã hỏi và chốt: AI chỉ làm tooling, không tự viết nội dung sản phẩm thay*
+- [ ] Chuẩn bị file Excel giá đầu tiên theo template chuẩn, import thử qua `/admin/prices/import` — *việc của founder*
+- [ ] Kiểm tra kết quả import đầu tiên — sửa lỗi mapping tên sợi/shop nếu có — *việc của founder, có thể nhờ hỗ trợ debug nếu gặp lỗi cụ thể*
+- [ ] Tạo 20 mẫu đan/móc cơ bản với hướng dẫn (founder tự viết) — *việc của founder*
+- [ ] Chuẩn bị ảnh cho tất cả sợi và mẫu — *việc của founder (PRD: founder tự chụp toàn bộ ảnh)*
+- [x] Tạo seed script `prisma/seed.ts` (cho YarnType, Pattern — không seed PriceListing vì sẽ import qua Excel) — đã làm: `prisma/seed-data/{yarns,patterns}.ts` chứa 2 sợi + 1 mẫu **ví dụ** (đánh dấu rõ "VÍ DỤ — thay bằng nội dung thật"), `prisma/seed.ts` idempotent (chạy nhiều lần không tạo trùng, dùng `slug` làm khóa), đăng ký qua `prisma.config.ts` (`migrations.seed`) + lệnh `npm run db:seed`. **Founder cần thay nội dung trong 2 file seed-data bằng nội dung thật rồi chạy `npm run db:seed`.** Verify thật: chạy 2 lần liên tiếp xác nhận không trùng lặp, quan hệ "sợi phù hợp" (`suitableYarns`) liên kết đúng giữa Pattern và YarnType — đã xóa data ví dụ khỏi DB sau khi verify.
 
 ### 2.4 Testing
 - [ ] Unit test cho utils functions (tính giá/100g, filter logic)
