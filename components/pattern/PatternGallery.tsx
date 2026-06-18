@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useState } from "react";
+import { FadeImage } from "@/components/ui/FadeImage";
 
 export function PatternGallery({ images, title }: { images: string[]; title: string }) {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
@@ -35,7 +36,7 @@ export function PatternGallery({ images, title }: { images: string[]; title: str
             onClick={() => setOpenIndex(i)}
             className="relative aspect-square overflow-hidden rounded-xl bg-secondary"
           >
-            <Image
+            <FadeImage
               src={src}
               alt={`${title} — ảnh ${i + 1}`}
               fill

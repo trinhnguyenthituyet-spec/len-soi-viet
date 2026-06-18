@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Be_Vietnam_Pro } from "next/font/google";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
+import { SITE_URL } from "@/lib/constants";
 import "./globals.css";
 
 const beVietnamPro = Be_Vietnam_Pro({
@@ -11,6 +12,7 @@ const beVietnamPro = Be_Vietnam_Pro({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
   title: "Sợi Len Việt — Tra cứu & so sánh giá len sợi",
   description:
     "Tra cứu chất liệu len sợi, so sánh giá nhiều shop tại Việt Nam, lưu mẫu đan/móc yêu thích và xem hướng dẫn làm từng bước.",

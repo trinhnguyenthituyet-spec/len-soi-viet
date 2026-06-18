@@ -8,8 +8,23 @@ import {
   getYarnTypes,
   parseFiberCategories,
   parseWeightCategories,
+  type YarnListItem,
   type YarnSort,
 } from "@/lib/yarn-queries";
+import { SITE_URL } from "@/lib/constants";
+
+function buildItemListJsonLd(items: YarnListItem[]) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    itemListElement: items.map((yarn, i) => ({
+      "@type": "ListItem",
+      position: i + 1,
+      url: `${SITE_URL}/yarn/${yarn.slug}`,
+      name: yarn.nameVi,
+    })),
+  };
+}
 
 export const metadata: Metadata = {
   title: "Catalog len sợi — Sợi Len Việt",
@@ -54,6 +69,10 @@ export default async function YarnCatalogPage({
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-8 sm:px-6">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(buildItemListJsonLd(items)) }}
+      />
       <h1 className="text-2xl font-bold text-foreground sm:text-3xl">Catalog len sợi</h1>
       <p className="mt-1 text-muted-foreground">
         {total} loại sợi {search && <>khớp với &quot;{search}&quot;</>}

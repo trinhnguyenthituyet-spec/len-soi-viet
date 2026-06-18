@@ -1,5 +1,5 @@
-import Image from "next/image";
 import Link from "next/link";
+import { FadeImage } from "@/components/ui/FadeImage";
 import { CRAFT_TYPE_LABELS, DIFFICULTY_LABELS } from "@/lib/constants";
 import type { PatternListItem } from "@/lib/pattern-queries";
 
@@ -11,7 +11,7 @@ export function PatternCard({ pattern }: { pattern: PatternListItem }) {
     >
       <div className="relative aspect-square w-full bg-secondary">
         {pattern.thumbnailUrl ? (
-          <Image
+          <FadeImage
             src={pattern.thumbnailUrl}
             alt={pattern.title}
             fill

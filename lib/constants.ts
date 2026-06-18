@@ -1,5 +1,7 @@
 export const SITE_NAME = "Sợi Len Việt";
 
+export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
+
 export const PRICE_STALE_DAYS = 14;
 
 export const FIBER_CATEGORY_LABELS: Record<string, string> = {

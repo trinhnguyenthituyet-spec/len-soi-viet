@@ -6,7 +6,33 @@ import { RelatedPatterns } from "@/components/yarn/RelatedPatterns";
 import { UseCases } from "@/components/yarn/UseCases";
 import { YarnHero } from "@/components/yarn/YarnHero";
 import { YarnTabs } from "@/components/yarn/YarnTabs";
-import { getAllYarnSlugs, getRelatedPatterns, getYarnBySlug } from "@/lib/yarn-queries";
+import { SITE_URL } from "@/lib/constants";
+import { getAllYarnSlugs, getRelatedPatterns, getYarnBySlug, type YarnDetail } from "@/lib/yarn-queries";
+
+function buildProductJsonLd(yarn: YarnDetail) {
+  const prices = yarn.priceListings.map((p) => p.pricePer100g);
+
+  return {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    name: yarn.nameVi,
+    description:
+      yarn.descriptionVi ?? `Thông tin chất liệu và giá của ${yarn.nameVi} tại các shop Việt Nam.`,
+    image: yarn.heroImageUrl ?? undefined,
+    url: `${SITE_URL}/yarn/${yarn.slug}`,
+    ...(prices.length > 0
+      ? {
+          offers: {
+            "@type": "AggregateOffer",
+            priceCurrency: "VND",
+            lowPrice: Math.min(...prices),
+            highPrice: Math.max(...prices),
+            offerCount: prices.length,
+          },
+        }
+      : {}),
+  };
+}
 
 export const revalidate = 3600;
 
@@ -55,6 +81,10 @@ export default async function YarnDetailPage({
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-8 sm:px-6">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(buildProductJsonLd(yarn)) }}
+      />
       <YarnHero yarn={yarn} />
 
       <div className="mt-8 grid gap-8 lg:grid-cols-[1fr_280px]">

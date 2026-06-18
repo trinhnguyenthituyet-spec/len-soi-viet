@@ -1,5 +1,5 @@
-import Image from "next/image";
 import Link from "next/link";
+import { FadeImage } from "@/components/ui/FadeImage";
 import { FIBER_CATEGORY_LABELS, WEIGHT_CATEGORY_LABELS } from "@/lib/constants";
 import { formatVnd } from "@/lib/utils";
 import type { YarnListItem } from "@/lib/yarn-queries";
@@ -12,7 +12,7 @@ export function YarnCard({ yarn }: { yarn: YarnListItem }) {
     >
       <div className="relative aspect-square w-full bg-secondary">
         {yarn.heroImageUrl ? (
-          <Image
+          <FadeImage
             src={yarn.heroImageUrl}
             alt={yarn.nameVi}
             fill

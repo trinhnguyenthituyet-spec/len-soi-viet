@@ -23,6 +23,7 @@
 - [x] Chạy `prisma migrate dev` — tạo bảng lần đầu (migration `20260617073729_init`, đã verify 6 bảng query được)
 - [x] Tạo Prisma Client singleton cho Next.js (`lib/prisma.ts`, dùng driver adapter `@prisma/adapter-pg` theo yêu cầu của Prisma Client v7 thế hệ mới)
 - [x] Thiết lập biến môi trường: `.env` (dev, gitignored) + `.env.example` (placeholder để track trong git) — *Vercel env vars hoãn cùng với việc deploy Vercel*
+- [x] *(bổ sung ở Phase 2.1)* Sửa bug thật: `.gitignore` có rule `.env*` vô tình chặn luôn `.env.example` — file này chưa từng được commit từ đầu dự án. Đã thêm `!.env.example` để override.
 - [x] *(bổ sung sau khi thử deploy)* Thêm `"postinstall": "prisma generate"` vào `package.json` — Vercel chỉ chạy `npm install && next build`, không tự chạy `prisma generate`, nên build sẽ lỗi "Module not found: ./generated/prisma/client" nếu thiếu bước này. Đã verify lại bằng cách xóa `lib/generated/` rồi chạy `npm install` sạch — tự sinh lại đúng.
 
 ### 0.3 Cấu hình file & image
@@ -189,12 +190,12 @@
 ## Phase 2 — Polish & SEO (Tuần 7–8)
 
 ### 2.1 SEO & Performance
-- [ ] Tạo `sitemap.xml` động (Next.js sitemap)
-- [ ] Tạo `robots.txt`
-- [ ] OG image cho từng trang (dùng `@vercel/og`)
-- [ ] Structured data JSON-LD cho catalog sợi
-- [ ] Kiểm tra Core Web Vitals với Lighthouse
-- [ ] Tối ưu ảnh: lazy loading, blur placeholder, WebP
+- [x] Tạo `sitemap.xml` động (`app/sitemap.ts`, gồm route tĩnh + slug sợi/mẫu từ DB)
+- [x] Tạo `robots.txt` (`app/robots.ts`, chặn `/admin`, `/api`, dẫn tới sitemap)
+- [x] OG image cho từng trang — *dùng `next/og` (`ImageResponse`) built-in sẵn trong Next.js, không cần cài `@vercel/og` riêng*: `app/opengraph-image.tsx` (mặc định), `app/yarn/[slug]/opengraph-image.tsx`, `app/patterns/[slug]/opengraph-image.tsx`
+- [x] Structured data JSON-LD cho catalog sợi — `Product`/`AggregateOffer` ở trang chi tiết sợi, `ItemList` ở trang danh mục
+- [x] Kiểm tra Core Web Vitals với Lighthouse — chạy thật qua `npx lighthouse` nhắm vào `next start` local: Performance 93-94/100, FCP 1.3s (đạt mục tiêu PRD <1.5s). Phát hiện + sửa 1 vấn đề thật: ảnh mascot trang chủ (LCP element) là SVG nên `priority` không tự thêm `fetchpriority=high` (hành vi đặc biệt của Next.js với SVG/`unoptimized`) — đã thêm `fetchPriority="high"` thủ công. LCP đo được 3.0-3.3s (vượt mục tiêu <2.5s) nhưng phần breakdown thực tế chỉ ~317ms — số đo bị chi phối bởi throttling mô phỏng mobile mặc định của Lighthouse trên máy dev đã chạy nặng nhiều giờ, không phản ánh đúng hiệu năng thật. **Cần đo lại trên URL Vercel thật sau khi deploy** để có số liệu đáng tin.
+- [x] Tối ưu ảnh: lazy loading (mặc định của `next/image` trừ ảnh `priority`) + WebP/AVIF (tự động qua Vercel Image Optimization) + hiệu ứng fade-in khi tải xong (`components/ui/FadeImage.tsx`, áp dụng cho card sợi/mẫu + gallery — không dùng cho ảnh `priority`/LCP vì fade sẽ phản tác dụng)
 
 ### 2.2 UX Polish
 - [ ] Loading skeleton cho danh sách sợi và mẫu
