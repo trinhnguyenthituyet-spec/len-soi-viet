@@ -1,6 +1,8 @@
 import { SessionProviderWrapper } from "@/components/admin/SessionProviderWrapper";
 import { AdminSidebar } from "@/components/admin/AdminSidebar";
 
+export const dynamic = "force-dynamic";
+
 export default function AdminDashboardLayout({ children }: { children: React.ReactNode }) {
   return (
     <SessionProviderWrapper>
