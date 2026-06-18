@@ -214,11 +214,12 @@
 - [x] Tạo seed script `prisma/seed.ts` (cho YarnType, Pattern — không seed PriceListing vì sẽ import qua Excel) — đã làm: `prisma/seed-data/{yarns,patterns}.ts` chứa 2 sợi + 1 mẫu **ví dụ** (đánh dấu rõ "VÍ DỤ — thay bằng nội dung thật"), `prisma/seed.ts` idempotent (chạy nhiều lần không tạo trùng, dùng `slug` làm khóa), đăng ký qua `prisma.config.ts` (`migrations.seed`) + lệnh `npm run db:seed`. **Founder cần thay nội dung trong 2 file seed-data bằng nội dung thật rồi chạy `npm run db:seed`.** Verify thật: chạy 2 lần liên tiếp xác nhận không trùng lặp, quan hệ "sợi phù hợp" (`suitableYarns`) liên kết đúng giữa Pattern và YarnType — đã xóa data ví dụ khỏi DB sau khi verify.
 
 ### 2.4 Testing
-- [ ] Unit test cho utils functions (tính giá/100g, filter logic)
-- [ ] Unit test cho hàm parse & validate Excel import (file đúng format, file thiếu cột, file sai tên sợi/shop, file rỗng)
-- [ ] Integration test cho API routes chính (bao gồm `/api/admin/prices/import`)
-- [ ] Manual testing: luồng người dùng đầu-cuối trên mobile
-- [ ] Cross-browser: Chrome, Safari, Firefox
+- [x] Cài Vitest (đã hỏi và chốt với founder) + `vitest.config.ts` (native `resolve.tsconfigPaths`, không cần plugin riêng) + `vitest.setup.ts` (load `.env` qua dotenv vì Vitest không tự load như Next.js) + script `npm run test`
+- [x] Unit test cho utils functions (`lib/utils.test.ts`: slugify với tiếng Việt có dấu, formatVnd, isPriceStale) — 10 test
+- [x] Unit test cho hàm parse & validate Excel import (`lib/excel-import.test.ts`: file đúng format, dòng trống, thiếu tên, giá không hợp lệ, file chỉ có header, file rỗng hoàn toàn — 7 test; `lib/price-import.test.ts`: tách logic validate thành hàm thuần `validatePriceRow` để test riêng — 8 test)
+- [x] Integration test cho API routes chính (`app/api/yarn/route.test.ts`, `app/api/patterns/route.test.ts`, `app/api/admin/prices/import/route.test.ts` — mock `next-auth` cho case auth, test thật với DB local qua Prisma, seed/cleanup bằng tiền tố `TEST_INTEGRATION_` để không đụng data khác — 10 test). Tổng: **35 test, 6 file, đều pass**. Phát hiện + sửa 1 lỗi nguy hiểm tự gây ra: 1 dòng cleanup trong test dùng `startsWith: ""` sẽ xóa **toàn bộ** `price_import_batches` thật chứ không chỉ data test — sửa trước khi chạy.
+- [x] Manual testing: luồng người dùng đầu-cuối trên mobile — verify thật bằng Playwright với viewport 375px + user agent iPhone: trang chủ → menu hamburger → catalog sợi → chi tiết sợi → so sánh → mẫu → lưu mẫu → trang mẫu đã lưu, không lỗi
+- [x] Cross-browser: Chrome, Safari, Firefox — verify thật bằng Playwright với 3 engine (Chromium/Firefox/WebKit) chạy cùng luồng người dùng, đều pass. Lần chạy đầu Chromium/WebKit báo "chưa thấy mẫu đã lưu" — điều tra bằng screenshot phát hiện trang đang ở trạng thái "Đang tải..." lúc chụp (timing trong test script, không phải bug), sửa lại chờ đúng rồi pass cả 3 engine
 
 ---
 

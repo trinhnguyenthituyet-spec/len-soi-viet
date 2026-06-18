@@ -1,7 +1,27 @@
 import { prisma } from "./prisma";
 import { slugify } from "./utils";
-import { parseExcelBuffer } from "./excel-import";
+import { parseExcelBuffer, type ParsedPriceRow } from "./excel-import";
 import type { Prisma } from "./generated/prisma/client";
+
+export type RowValidationResult =
+  | { valid: true; yarnName: string; sellerName: string; price: number }
+  | { valid: false; reason: string };
+
+export function validatePriceRow(row: ParsedPriceRow): RowValidationResult {
+  const yarnName = row.yarnName.trim();
+  const sellerName = row.sellerName.trim();
+
+  if (!yarnName || !sellerName) {
+    return { valid: false, reason: "Thiếu tên sợi hoặc tên shop" };
+  }
+
+  const price = Number(row.priceRaw);
+  if (!row.priceRaw || !Number.isFinite(price) || price <= 0) {
+    return { valid: false, reason: `Giá không hợp lệ: "${row.priceRaw}"` };
+  }
+
+  return { valid: true, yarnName, sellerName, price };
+}
 
 export interface ImportLogEntry {
   yarns: { id: string; nameVi: string }[];
@@ -53,19 +73,12 @@ export async function processExcelImport(
   const sellerCache = new Map<string, { id: string }>();
 
   for (const row of rows) {
-    const yarnName = row.yarnName.trim();
-    const sellerName = row.sellerName.trim();
-
-    if (!yarnName || !sellerName) {
-      errors.push({ row: row.rowNumber, reason: "Thiếu tên sợi hoặc tên shop" });
+    const validation = validatePriceRow(row);
+    if (!validation.valid) {
+      errors.push({ row: row.rowNumber, reason: validation.reason });
       continue;
     }
-
-    const priceNum = Number(row.priceRaw);
-    if (!row.priceRaw || !Number.isFinite(priceNum) || priceNum <= 0) {
-      errors.push({ row: row.rowNumber, reason: `Giá không hợp lệ: "${row.priceRaw}"` });
-      continue;
-    }
+    const { yarnName, sellerName, price: priceNum } = validation;
 
     const yarnKey = yarnName.toLowerCase();
     let yarn = yarnCache.get(yarnKey);
