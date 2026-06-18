@@ -72,4 +72,8 @@ export const SELLER_TYPE_LABELS: Record<string, string> = {
 
 export const SAVED_PATTERNS_STORAGE_KEY = "soi-len-viet:saved-patterns";
 
+// Ảnh mặc định hiển thị khi sợi/mẫu chưa có ảnh riêng (thay cho chữ "Chưa có ảnh").
+export const DEFAULT_IMAGE_URL =
+  "https://res.cloudinary.com/drubj3g1n/image/upload/v1781779641/soi-len-viet/default-yarn-pattern-image.png";
+
 export const COMPARE_MAX_YARNS = 4;

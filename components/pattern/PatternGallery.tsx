@@ -3,17 +3,11 @@
 import Image from "next/image";
 import { useState } from "react";
 import { FadeImage } from "@/components/ui/FadeImage";
+import { DEFAULT_IMAGE_URL } from "@/lib/constants";
 
 export function PatternGallery({ images, title }: { images: string[]; title: string }) {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
-
-  if (images.length === 0) {
-    return (
-      <div className="flex aspect-square items-center justify-center rounded-2xl bg-secondary text-sm text-muted-foreground">
-        Chưa có ảnh
-      </div>
-    );
-  }
+  const displayImages = images.length > 0 ? images : [DEFAULT_IMAGE_URL];
 
   function close() {
     setOpenIndex(null);
@@ -22,14 +16,14 @@ export function PatternGallery({ images, title }: { images: string[]; title: str
   function step(delta: number) {
     setOpenIndex((i) => {
       if (i == null) return i;
-      return (i + delta + images.length) % images.length;
+      return (i + delta + displayImages.length) % displayImages.length;
     });
   }
 
   return (
     <>
       <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
-        {images.map((src, i) => (
+        {displayImages.map((src, i) => (
           <button
             key={src}
             type="button"
@@ -62,7 +56,7 @@ export function PatternGallery({ images, title }: { images: string[]; title: str
           >
             ×
           </button>
-          {images.length > 1 && (
+          {displayImages.length > 1 && (
             <button
               type="button"
               onClick={(e) => {
@@ -80,14 +74,14 @@ export function PatternGallery({ images, title }: { images: string[]; title: str
             onClick={(e) => e.stopPropagation()}
           >
             <Image
-              src={images[openIndex]}
+              src={displayImages[openIndex]}
               alt={`${title} — ảnh ${openIndex + 1}`}
               fill
               className="object-contain"
               sizes="100vw"
             />
           </div>
-          {images.length > 1 && (
+          {displayImages.length > 1 && (
             <button
               type="button"
               onClick={(e) => {

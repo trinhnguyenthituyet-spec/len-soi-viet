@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { FadeImage } from "@/components/ui/FadeImage";
-import { CRAFT_TYPE_LABELS, DIFFICULTY_LABELS } from "@/lib/constants";
+import { CRAFT_TYPE_LABELS, DEFAULT_IMAGE_URL, DIFFICULTY_LABELS } from "@/lib/constants";
 import type { PatternListItem } from "@/lib/pattern-queries";
 
 export function PatternCard({ pattern }: { pattern: PatternListItem }) {
@@ -10,19 +10,13 @@ export function PatternCard({ pattern }: { pattern: PatternListItem }) {
       className="group flex flex-col overflow-hidden rounded-2xl border border-border bg-card shadow-sm transition-shadow hover:shadow-md"
     >
       <div className="relative aspect-square w-full bg-secondary">
-        {pattern.thumbnailUrl ? (
-          <FadeImage
-            src={pattern.thumbnailUrl}
-            alt={pattern.title}
-            fill
-            className="object-cover"
-            sizes="(min-width: 1024px) 25vw, (min-width: 640px) 33vw, 50vw"
-          />
-        ) : (
-          <div className="flex h-full items-center justify-center text-sm text-muted-foreground">
-            Chưa có ảnh
-          </div>
-        )}
+        <FadeImage
+          src={pattern.thumbnailUrl ?? DEFAULT_IMAGE_URL}
+          alt={pattern.title}
+          fill
+          className="object-cover"
+          sizes="(min-width: 1024px) 25vw, (min-width: 640px) 33vw, 50vw"
+        />
         <span className="absolute left-2 top-2 rounded-full bg-accent px-2 py-0.5 text-xs font-medium text-accent-foreground">
           {DIFFICULTY_LABELS[pattern.difficulty]}
         </span>

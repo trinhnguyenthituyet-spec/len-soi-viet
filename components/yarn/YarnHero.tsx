@@ -1,26 +1,20 @@
 import Image from "next/image";
 import Link from "next/link";
-import { FIBER_CATEGORY_LABELS, WEIGHT_CATEGORY_LABELS } from "@/lib/constants";
+import { DEFAULT_IMAGE_URL, FIBER_CATEGORY_LABELS, WEIGHT_CATEGORY_LABELS } from "@/lib/constants";
 import type { YarnDetail } from "@/lib/yarn-queries";
 
 export function YarnHero({ yarn }: { yarn: YarnDetail }) {
   return (
     <div className="grid gap-6 sm:grid-cols-[280px_1fr]">
       <div className="relative aspect-square w-full overflow-hidden rounded-2xl bg-secondary">
-        {yarn.heroImageUrl ? (
-          <Image
-            src={yarn.heroImageUrl}
-            alt={yarn.nameVi}
-            fill
-            className="object-cover"
-            sizes="280px"
-            priority
-          />
-        ) : (
-          <div className="flex h-full items-center justify-center text-sm text-muted-foreground">
-            Chưa có ảnh
-          </div>
-        )}
+        <Image
+          src={yarn.heroImageUrl ?? DEFAULT_IMAGE_URL}
+          alt={yarn.nameVi}
+          fill
+          className="object-cover"
+          sizes="280px"
+          priority
+        />
       </div>
 
       <div className="flex flex-col gap-3">
