@@ -23,6 +23,7 @@
 - [x] Chạy `prisma migrate dev` — tạo bảng lần đầu (migration `20260617073729_init`, đã verify 6 bảng query được)
 - [x] Tạo Prisma Client singleton cho Next.js (`lib/prisma.ts`, dùng driver adapter `@prisma/adapter-pg` theo yêu cầu của Prisma Client v7 thế hệ mới)
 - [x] Thiết lập biến môi trường: `.env` (dev, gitignored) + `.env.example` (placeholder để track trong git) — *Vercel env vars hoãn cùng với việc deploy Vercel*
+- [x] *(bổ sung sau khi thử deploy)* Thêm `"postinstall": "prisma generate"` vào `package.json` — Vercel chỉ chạy `npm install && next build`, không tự chạy `prisma generate`, nên build sẽ lỗi "Module not found: ./generated/prisma/client" nếu thiếu bước này. Đã verify lại bằng cách xóa `lib/generated/` rồi chạy `npm install` sạch — tự sinh lại đúng.
 
 ### 0.3 Cấu hình file & image
 - [ ] Tạo tài khoản Cloudinary (hoặc dùng Supabase Storage) — *hoãn: chưa có credentials thật, dùng placeholder trong `.env`, founder điền sau*
